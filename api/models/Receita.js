@@ -8,7 +8,6 @@
 module.exports = {
   attributes: {
     title: { type: 'string', required: true },
-    trackback: { type: 'string', required: true },
     description: { type: 'string', required: true },
     ingredients: {
       type: 'json',
@@ -18,6 +17,12 @@ module.exports = {
       type: 'json',
       columnType: 'array',
     },
+    categories: {
+      type: 'json',
+      columnType: 'array',
+    },
+    recipe_yeld: { type: 'string' },
+    total_time: { type: 'string' },
   },
 };
 

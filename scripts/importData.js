@@ -13,7 +13,7 @@ async function importData() {
     // Leia o arquivo JSON
     const data = JSON.parse(
       fs.readFileSync(
-        path.resolve(__dirname, "../assets/data/receitas.json"),
+        path.resolve(__dirname, "../assets/data/receita.json"),
         "utf8"
       )
     );
@@ -23,7 +23,6 @@ async function importData() {
       await Receita.create(item);
     }
 
-    console.log("Nova receita criada:", novaReceita);
   } catch (error) {
     console.error("Erro ao importar dados:", error);
   } finally {

@@ -1,6 +1,8 @@
 // Configuração de rotas
 module.exports.routes = {
-  '/': { view: 'pages/homepage' },
-  'GET /receitas': 'ReceitasController.all',
-  'POST /receitas': 'ReceitasController.create',
+  'POST /receita': 'ReceitasController.createOne',
+  'POST /receitas': 'ReceitasController.createMany',
+  'GET /receitas': { controller: 'ReceitasController', action: 'all' },
+  'GET /receitas/:id': { controller: 'ReceitasController', action: 'find' },
+  'GET /receitas/ingredient/:ingredient': { controller: 'ReceitasController', action: 'findWithIngredients' },
 };

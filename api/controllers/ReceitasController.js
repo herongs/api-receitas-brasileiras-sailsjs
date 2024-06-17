@@ -5,48 +5,69 @@
  * @help        :: See https://sailsjs.com/docs/concepts/actions
  */
 
-const Receita = require("../models/Receita");
-
 module.exports = {
-    all: async function (req, res) {
-        const receitas = await Receita.find();
-        return res.json(receitas);
-    },
+  all: async function (req, res) {
+    const receitas = await sails.models.receita.find();
+    return res.json(receitas);
+  },
 
-    find: async function (req, res) {
-        const id = req.params.id;
-        const receita = await Receita.findOne({
-            id: id
-        });
-        return res.json(receita);
-    },
+  find: async function (req, res) {
+    const id = req.params.id;
+    const receita = await sails.models.receita.findOne({
+      id: id,
+    });
+    return res.json(receita);
+  },
 
-    create: async function (req, res) {
-      try {
-        // Extrair os dados do corpo da requisição
-        const { title, trackback, description, ingredients, prepare_mode } = req.body;
+  createOne: async function (req, res) {
+    try {
+      const { title, description, ingredients, prepare_mode, categories, recipe_yeld, total_time, relevance } = req.body;
 
-        // Criar a nova receita no banco de dados
-        const novaReceita = await Receita.create({
+      const novaReceita = await sails.models.receita
+        .create({
           title,
-          trackback,
           description,
           ingredients,
           prepare_mode,
-        }).fetch(); // Usamos .fetch() para retornar o registro criado com todos os detalhes
+          categories,
+          recipe_yeld,
+          total_time,
+        })
+        .fetch();
 
-        // Retornar a nova receita como resposta
-        return res.status(201).json({ receita: novaReceita });
-      } catch (err) {
-        // Se ocorrer algum erro, retornar uma resposta de erro
-        return res.status(500).json({ error: 'Erro ao criar a receita', details: err.message });
-      }
+      console.log(novaReceita)
 
+      return res.json(novaReceita);
+    } catch (err) {
+      console.log(err);
+    }
+  },
 
-    },
+  createMany: async function (req, res) {
+    try {
+      const receitas = req.body;
 
+      const novasReceitas = await sails.models.receita.createEach(receitas).fetch();
 
+      return res.json(novasReceitas);
+    } catch (err) {
+      console.log(err);
+    }
+  },
 
+  findWithIngredients: async function (req, res) {
+    const ingredient = req.params.ingredient;
 
+    try {
+      const receitas = await sails.models.receita.find({
+        ingredients: {
+          contains: { ingredient },
+        },
+      });
+
+      return res.json(receitas);
+    } catch (err) {
+      return res.serverError({ error: err.message });
+    }
+  },
 };
-

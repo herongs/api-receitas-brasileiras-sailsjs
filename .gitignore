@@ -19,5 +19,6 @@ lib-cov
 *.out
 *.pid
 
-assets/data/receitas.json
+assets/data
+config/env
 

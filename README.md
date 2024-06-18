@@ -1,6 +1,8 @@
 # api-receitas-brasileiras
 
-a [Sails v1](https://sailsjs.com) application
+Descontinuada...
+
+[Sails v1](https://sailsjs.com) application
 
 
 ### Links
